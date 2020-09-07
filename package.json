@@ -7,7 +7,8 @@
     "prepare": "npm run build",
     "build": "npx tsc && node ./build.js",
     "watch": "npx tsc -w",
-    "test": "npm run build && webpack-dev-server"
+    "dev": "npm run build && webpack-dev-server",
+    "test": "npm run build && webpack"
   },
   "repository": {
     "type": "git",

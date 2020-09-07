@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  mode:'production',
   entry: path.join(__dirname, 'build','test.js'),
   output: {
     path: path.resolve(__dirname, 'static'),
