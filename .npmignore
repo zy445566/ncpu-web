@@ -104,5 +104,4 @@ dist
 .tern-port
 
 # project
-build/
 static/

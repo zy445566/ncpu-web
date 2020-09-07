@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "target":"ESNext",
+        "outDir": "./build/"
+    },
+    "include": [
+        "index.ts",
+        "worker/*.ts",
+        "test.ts", "build.ts"
+    ]
+}

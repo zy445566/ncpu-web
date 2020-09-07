@@ -1,0 +1,36 @@
+{
+  "name": "ncpu-web",
+  "version": "1.0.0",
+  "description": "browser run function worker multi-threaded library",
+  "main": "./build/index.js",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "npx tsc && node ./build.js",
+    "watch": "npx tsc -w",
+    "test": "npm run build && webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zy445566/ncpu-web.git"
+  },
+  "keywords": [
+    "web",
+    "browser",
+    "function",
+    "worker",
+    "threads"
+  ],
+  "author": "zy445566",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zy445566/ncpu-web/issues"
+  },
+  "homepage": "https://github.com/zy445566/ncpu-web#readme",
+  "devDependencies": {
+    "@types/node": "^14.6.4",
+    "typescript": "^3.9.3",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
