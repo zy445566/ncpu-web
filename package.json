@@ -5,7 +5,7 @@
   "main": "./build/index.js",
   "scripts": {
     "prepare": "npm run build",
-    "build": "npx tsc && node ./build.js",
+    "build": "npx tsc && node ./build/build.js",
     "watch": "npx tsc -w",
     "dev": "npm run build && webpack-dev-server",
     "test": "npm run build && webpack"

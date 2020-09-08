@@ -6,6 +6,7 @@
     },
     "include": [
         "index.ts",
+        "build.ts",
         "worker/*.ts",
         "test.ts", "build.ts"
     ]
