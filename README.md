@@ -5,7 +5,7 @@ browser run function worker multi-threaded library
 ```sh
 npm install ncpu-web
 ```
-[ncpu-web](https://github.com/zy445566/ncpu-web) for the `browser` environment,use [ncpu](https://github.com/zy445566/ncpu) for the `node.js` environment.
+[ncpu-web](https://github.com/zy445566/ncpu-web) for the **`browser`** environment,use [ncpu](https://github.com/zy445566/ncpu) for the **`node.js`** environment.
 
 
 `require:Chrome60+，FireFox57+`
