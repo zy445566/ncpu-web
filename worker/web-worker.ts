@@ -1,13 +1,20 @@
-self.onmessage =  function(event) {
-    const {functionData,params} = event.data.workerData;
-    async function run() {
-        const runFunction = new Function(
-            'params',
-            `const func = ${functionData};return func(...params);`
-        );
-        let res = runFunction(params);
-        if(res instanceof Promise) {res = await res;}
-        this.postMessage(res)
-    }
-    run();
+type NcpuParams = {
+    key:number,
+    functionData:string,
+    params:Array<any>
+}
+type NcpuResult = {
+    key:number,
+    res:any
+}
+self.onmessage =  async function(event) {
+    const ncpuParams:NcpuParams = event.data;
+    const runFunction = new Function(
+        'params',
+        `const func = ${ncpuParams.functionData};return func(...params);`
+    );
+    const result:NcpuResult = {key:ncpuParams.key,res:undefined}
+    result.res = runFunction(ncpuParams.params);
+    if(result.res instanceof Promise) {result.res = await result.res;}
+    this.postMessage(result);
 }
