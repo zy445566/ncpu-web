@@ -54,10 +54,6 @@ main()
 ```
 The above example spawns a Worker thread for each callback function when runing. In actual practice, use a pool of Workers instead for these kinds of tasks. Otherwise, the overhead of creating Workers would likely exceed their benefit.
 
-# Other solutions
-* [pambdajs](https://github.com/tim-hub/pambdajs)
-* [napajs](https://github.com/microsoft/napajs)
-
 # License
 [ncpu-web](https://github.com/zy445566/ncpu-web) is available under the MIT license. See the [LICENSE](https://github.com/zy445566/ncpu-web/blob/master/LICENSE) file for details.
 
