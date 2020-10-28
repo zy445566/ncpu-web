@@ -1,5 +1,5 @@
 # ncpu-web
-browser run function worker multi-threaded library
+multi-threaded library that browser run function worker
 
 # Installation 
 ```sh
