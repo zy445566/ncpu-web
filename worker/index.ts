@@ -10,20 +10,29 @@ export class NcpuWorker {
     worker:Worker;
     index:number;
     completeIndex:number;
+
     private start() {
         this.worker = new Worker(workerUrl);
         this.resetIndex();
     }
+
     private end() {
         this.worker.terminate();
         this.worker = undefined;
         this.resetIndex();
     }
+
     private resetIndex() {
         this.index = 0;
         this.completeIndex = 0;
     }
-    public run(func:Function,params:Array<any>) {
+
+    private gc() {
+        this.completeIndex++;
+        if(this.index===this.completeIndex) {this.end();}
+    }
+
+    public run(func:Function,params:Array<any>, timeout:number) {
         if(!window) {
             throw new Error('must be run browser environment');
         }
@@ -37,16 +46,24 @@ export class NcpuWorker {
         return new Promise((resolve, reject) => {
             this.index++;
             const key = this.index;
+            let timer;
+            if(timeout>=0) {
+                timer = setTimeout(()=>{
+                    this.gc();
+                    return reject(new Error('task timeout'));
+                }, timeout)
+            }
             this.worker.addEventListener('message',(event) => {
                 const res = event.data;
                 if(res.key===key) {
-                    this.completeIndex++;
-                    if(this.index===this.completeIndex) {this.end();}
+                    this.gc();
+                    if(timer) {clearTimeout(timer)}
                     return resolve(res.res);
                 }
             });
             this.worker.addEventListener('error',(err) => {
                 this.end();
+                if(timer) {clearTimeout(timer)}
                 return reject(err);
             });
             this.worker.postMessage({
