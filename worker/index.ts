@@ -47,16 +47,21 @@ export class NcpuWorker {
             this.index++;
             const key = this.index;
             let timer;
+            let isTaskComplete = false;
             if(timeout>=0) {
                 timer = setTimeout(()=>{
-                    this.gc();
-                    return reject(new Error('task timeout'));
+                    if(!isTaskComplete) {
+                        this.gc();
+                        isTaskComplete = true;
+                        return reject(new Error('task timeout'));
+                    }
                 }, timeout)
             }
             this.worker.addEventListener('message',(event) => {
                 const res = event.data;
-                if(res.key===key) {
+                if(res.key===key && (!isTaskComplete)) {
                     this.gc();
+                    isTaskComplete = true;
                     if(timer) {clearTimeout(timer)}
                     return resolve(res.res);
                 }
