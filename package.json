@@ -1,6 +1,6 @@
 {
   "name": "ncpu-web",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "multi-threaded library that browser run function worker",
   "main": "./build/index.js",
   "scripts": {

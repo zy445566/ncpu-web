@@ -5,25 +5,32 @@ type NcpuParams = {
 }
 type NcpuResult = {
     key:number,
+    error:any,
     res:any
 }
 // var runFunction = function(_params){}
 self.onmessage =  async function(event) {
     const ncpuParams:NcpuParams = event.data;
-    // more error tracing
-    // const blob = new Blob(
-    //     [`function runFunction (params){const func = ${ncpuParams.functionData};return func(...params)}`], 
-    //     {type : 'application/javascript'}
-    // );
-    // const workerUrl = URL.createObjectURL(blob);
-    // importScripts(workerUrl)
-    // more stable
-    const runFunction = new Function(
-        'params',
-        `const func = ${ncpuParams.functionData};return func(...params);`
-    );
-    const result:NcpuResult = {key:ncpuParams.key,res:undefined}
-    result.res = runFunction(ncpuParams.params);
-    if(result.res instanceof Promise) {result.res = await result.res;}
-    this.postMessage(result);
+    const result:NcpuResult = {key:ncpuParams.key, error:undefined, res:undefined}
+    try {
+        // more error tracing
+        // const blob = new Blob(
+        //     [`function runFunction (params){const func = ${ncpuParams.functionData};return func(...params)}`], 
+        //     {type : 'application/javascript'}
+        // );
+        // const workerUrl = URL.createObjectURL(blob);
+        // importScripts(workerUrl)
+        // more stable
+        const runFunction = new Function(
+            'params',
+            `const func = ${ncpuParams.functionData};return func(...params);`
+        );
+        result.res = runFunction(ncpuParams.params);
+        if(result.res instanceof Promise) {result.res = await result.res;}
+    } catch(err) {
+        result.error = err;
+    } finally {
+        this.postMessage(result);
+    }
+    
 }
