@@ -1,3 +1,4 @@
+// @ts-nocheck
 const { readFileSync, writeFileSync, unlinkSync } = require('fs');
 const { join } = require('path');
 const workerPath = join(__dirname, 'worker', 'web-worker.js');

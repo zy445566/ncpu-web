@@ -32,7 +32,7 @@ export class NcpuWorker {
         if(this.index===this.completeIndex) {this.end();}
     }
 
-    public run(func:Function,params:Array<any>, timeout:number) {
+    public run(func:Function, params:Array<any>, {injectList, timeout}:{injectList:Array<string>,timeout:number}) {
         if(!window) {
             throw new Error('must be run browser environment');
         }
@@ -73,7 +73,7 @@ export class NcpuWorker {
                 return reject(err);
             });
             this.worker.postMessage({
-                key, functionData, params
+                key, functionData, params, injectList
             });
         });
     }
