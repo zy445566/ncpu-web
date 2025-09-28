@@ -50,7 +50,7 @@ async function main () {
         return fibo(num);
     }, [39] ,{ncpuWorkerPool})]); // reuse a thread
     
-    // ### 使用默认共享工作池
+    // use the default thread pool
     const defaultPool = NCPU.getDefaultWorkerPool();
     await NCPU.run((a, b) => a + b, [5, 10], {ncpuWorkerPool: defaultPool}); // result: 15
 }
