@@ -2,12 +2,10 @@
     "compilerOptions": {
         "module": "ESNext",
         "target":"ESNext",
-        "outDir": "./build/"
+        "outDir": "./build/",
+        "skipLibCheck": true
     },
     "include": [
-        "index.ts",
-        "build.ts",
-        "worker/*.ts",
-        "test.ts", "build.ts"
+        "src/**/*"
     ]
 }

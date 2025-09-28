@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NCPU 测试页面</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin-bottom: 10px; padding: 10px; border-radius: 5px; }
+        .pass { background-color: #d4edda; color: #155724; }
+        .fail { background-color: #f8d7da; color: #721c24; }
+        #summary { margin: 20px 0; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>NCPU 测试结果</h1>
+    <div id="summary"></div>
+    <div id="results"></div>
+    
+    <script src="webpack.bundle.js"></script>
+    <script>
+        function testsCompleted(results) {
+            const resultsContainer = document.getElementById('results');
+            const summaryContainer = document.getElementById('summary');
+            
+            let passCount = 0;
+            let failCount = 0;
+            
+            results.forEach(test => {
+                const testDiv = document.createElement('div');
+                testDiv.className = `test ${test.status}`;
+                testDiv.innerHTML = `
+                    <strong>${test.name}</strong>: ${test.status.toUpperCase()}
+                    ${test.message ? `<div>${test.message}</div>` : ''}
+                `;
+                resultsContainer.appendChild(testDiv);
+                
+                test.status === 'pass' ? passCount++ : failCount++;
+            });
+            
+            summaryContainer.textContent = `测试完成: ${passCount} 通过, ${failCount} 失败`;
+        }
+        
+        // 如果测试已经完成(页面加载较慢时)
+        if (window.testResults && window.testResults.length > 0) {
+            testsCompleted(window.testResults);
+        }
+    </script>
+</body>
+</html>

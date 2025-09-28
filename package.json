@@ -1,13 +1,13 @@
 {
   "name": "ncpu-web",
-  "version": "1.1.10",
+  "version": "2.0.0",
   "description": "multi-threaded library that browser run function worker",
   "main": "./build/index.js",
   "scripts": {
     "prepare": "npm run build",
     "build": "npx tsc && node ./build/build.js",
     "watch": "npx tsc -w",
-    "dev": "npm run build && webpack-dev-server",
+    "dev": "npm run build && webpack serve",
     "test": "npm run build && webpack"
   },
   "repository": {
@@ -28,10 +28,12 @@
   },
   "homepage": "https://github.com/zy445566/ncpu-web#readme",
   "devDependencies": {
-    "@types/node": "^14.6.4",
-    "typescript": "^3.9.3",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "@types/node": "^20.19.17",
+    "html-webpack-plugin": "^5.6.4",
+    "ts-loader": "^9.5.4",
+    "typescript": "^5.9.2",
+    "webpack": "^5.101.3",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
   }
 }

@@ -33,22 +33,26 @@ async function main () {
     });
     // slef time to run
     await workerFibo(38)+await workerFibo(39) // result: 102334155 //fibo(40)
-  // ### getWorker // reuse a thread
-    const ncpuWorker = NCPU.getWorker(); 
+    // ### getWorkerPool // reuse a thread
+    const ncpuWorkerPool = NCPU.getWorkerPool(); 
     const multiplexingWorkerFibo = await NCPU.pick((num)=>{
         const fibo = (value)=>{
             if(value<=2){return 1;}
             return fibo(value-2)+fibo(value-1);
         }
         return fibo(num);
-    }, {ncpuWorker}); // reuse a thread
+    }, {ncpuWorkerPool}); // reuse a thread
     const res = await Promise.all([multiplexingWorkerFibo(38), NCPU.run((num)=>{
         const fibo = (value)=>{
             if(value<=2){return 1;}
             return fibo(value-2)+fibo(value-1);
         }
         return fibo(num);
-    }, [39] ,{ncpuWorker})]); // reuse a thread
+    }, [39] ,{ncpuWorkerPool})]); // reuse a thread
+    
+    // ### 使用默认共享工作池
+    const defaultPool = NCPU.getDefaultWorkerPool();
+    await NCPU.run((a, b) => a + b, [5, 10], {ncpuWorkerPool: defaultPool}); // result: 15
 }
 main()
 ```
