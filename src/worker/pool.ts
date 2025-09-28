@@ -146,7 +146,7 @@ export class NcpuWorkerPool {
      */
     public async terminate(force: boolean = false): Promise<void> {
         if(!force) {
-            if(this.taskQueue.length > 0) {
+            if(this.taskQueue.length > 0 || this.workers.length > 0) {
                 return;
             }
         }
