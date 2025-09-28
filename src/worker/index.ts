@@ -7,35 +7,36 @@ function getFunctionData (func:Function):string {
     return func.toString();
 }
 export class NcpuWorker {
-    worker:Worker;
-    index:number;
-    completeIndex:number;
+    private worker:Worker;
+    private index:number;
     private workerOptions: WorkerOptions | undefined;
 
     constructor(options?: {workerOptions: WorkerOptions | undefined}) {
         this.workerOptions = options?.workerOptions;
     }
     
-    private start() {
-        this.worker = new Worker(workerUrl, this.workerOptions);
-        this.resetIndex();
+    public start() {
+        if(!this.worker) { 
+            this.worker = new Worker(workerUrl, this.workerOptions);
+            this.resetIndex();
+        }
     }
 
-    private end() {
-        this.worker.terminate();
-        this.resetIndex();
+    public end() {
+        if(this.worker) { 
+            this.worker.terminate();
+            this.resetIndex();
+            this.worker = undefined;
+        }
     }
 
     private resetIndex() {
         this.index = 0;
-        this.completeIndex = 0;
     }
 
     public run(func:Function, params:Array<any>) {
         const functionData = getFunctionData (func);
-        if(!this.worker) { 
-            this.start();
-        }
+        this.start();
         return new Promise((resolve, reject) => {
             this.index++;
             const key = this.index;

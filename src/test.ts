@@ -103,7 +103,9 @@ const testUnit = {
 async function run(testUnitList) {
     for(let testUnitValue of testUnitList) {
         for(let testFunc of Object.getOwnPropertySymbols(testUnitValue)) {
+            console.log(testFunc,'start')
             await testUnitValue[testFunc]();
+            console.log(testFunc,'end')
         }
     }
 }
@@ -112,7 +114,9 @@ async function run(testUnitList) {
 (window as any).testResults = testResults;
 
 (async function() {
-    await run([testUnit]);
+    await run([testUnit]).catch(err=>{
+        console.log(err);
+    });
     // 通知页面测试已完成
     if (typeof (window as any).testsCompleted === 'function') {
         (window as any).testsCompleted(testResults);
