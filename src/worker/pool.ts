@@ -134,6 +134,8 @@ export class NcpuWorkerPool {
                 task.reject(error);
                 // 将工作线程标记为空闲
                 this.idleWorkers.push(worker);
+                // 异常后替换worker
+                this.terminateWorker(worker)
                 // 处理下一个任务
                 this.processQueue();
             });
