@@ -83,6 +83,7 @@ export class NcpuWorkerPool {
     private processQueue(): void {
         // 如果没有待处理的任务，直接返回
         if (this.taskQueue.length === 0) {
+            this.terminate()
             return;
         }
 
@@ -141,7 +142,12 @@ export class NcpuWorkerPool {
     /**
      * 关闭所有工作线程
      */
-    public async terminate(): Promise<void> {
+    public async terminate(force: boolean = false): Promise<void> {
+        if(!force) {
+            if(this.taskQueue.length > 0) {
+                return;
+            }
+        }
         // 清空任务队列并拒绝所有待处理的任务
         while (this.taskQueue.length > 0) {
             const task = this.taskQueue.shift()!;
